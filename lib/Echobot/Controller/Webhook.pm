@@ -34,6 +34,8 @@ sub webhook {
     $logger->debug($request->content);
   };
 
+  return if $ENV{HARNESS_ACTIVE};
+
   for my $event (@{$events}) {
     if ($event->is_user_event
         && $event->is_message_event
