@@ -15,7 +15,7 @@ sub startup {
   my $r = $self->routes;
 
   # Normal route to controller
-  $r->post('/webhook')->to('webhook#webhook');
+  $r->post('/')->to('webhook#webhook');
 }
 
 1;
