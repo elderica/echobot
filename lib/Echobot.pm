@@ -16,9 +16,6 @@ sub startup {
   defined($channel_access_token) && length($channel_secret) != 0
     or die('channel_access_token is not set in config');
 
-  # Documentation browser under "/perldoc"
-  $self->plugin('PODRenderer') if $config->{perldoc};
-
   # Router
   my $r = $self->routes;
 
