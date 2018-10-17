@@ -1,6 +1,7 @@
 package Echobot::Controller::Webhook;
 use Mojo::Base 'Mojolicious::Controller';
 
+use Mojo::Util qw|dumper|;
 use Try::Tiny;
 use LINE::Bot::API;
 use LINE::Bot::API::Builder::SendMessage;
@@ -37,12 +38,21 @@ sub webhook {
   return if $ENV{HARNESS_ACTIVE};
 
   for my $event (@{$events}) {
-    if ($event->is_user_event
-        && $event->is_message_event
-        && $event->is_text_message
+    if ($event->is_message_event
     ) {
       my $messages = LINE::Bot::API::Builder::SendMessage->new;
-      $messages->add_text(text => $event->text);
+
+      if ($event->is_text_message) {
+        $messages->add_text(text =>
+          sprintf("%s曰く「%s・・・」",
+            $event->is_user_event ? $bot->get_profile($event->user_id)->display_name : 'グループの誰か',
+            substr($event->text, 0, 6)))
+          if int(rand 3) == 1;
+      }
+
+      $messages->add_text(text => 'もっと貼って！') if $event->is_image_message;
+
+      $logger->debug('\n' . dumper($event));
 
       my $reply = $bot->reply_message(
         $event->reply_token,
@@ -51,7 +61,7 @@ sub webhook {
 
       unless ($reply->is_success) {
         for my $detail (@{$reply->details // {}}) {
-          $logger->fatal($detail->{message})
+          $logger->fatal(sprintf('%s:%d:%s', __FILE__, __LINE__, $detail->{message}))
             if $detail && ref($detail) eq 'HASH';
         }
       }
