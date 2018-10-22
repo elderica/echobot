@@ -9,8 +9,8 @@ sub startup {
   # Load configuration from hash returned by "my_app.conf"
   my $config = $self->plugin('Config');
 
-  my $channel_secret = $self->config('channel_secret');
-  my $channel_access_token = $self->config('channel_access_token');
+  my $channel_secret = $config->{channel_secret};
+  my $channel_access_token = $config->{channel_access_token};
   defined($channel_secret) && length($channel_secret) != 0
     or die('channel_secret is not set in config');
   defined($channel_access_token) && length($channel_secret) != 0
@@ -18,8 +18,8 @@ sub startup {
 
   $self->helper(line_message_api => sub {
     state $bot = LINE::Bot::API->new(
-      channel_secret => $self->config('channel_secret'),
-      channel_access_token => $self->config('channel_access_token')
+      channel_secret => $channel_secret,
+      channel_access_token => $channel_access_token
     );
   });
 
