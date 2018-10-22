@@ -17,10 +17,11 @@ sub startup {
     or die('channel_access_token is not set in config');
 
   $self->helper(line_message_api => sub {
-    state $bot = LINE::Bot::API->new(
+    state $api = LINE::Bot::API->new(
       channel_secret => $channel_secret,
       channel_access_token => $channel_access_token
     );
+    $api;
   });
 
   # Router
