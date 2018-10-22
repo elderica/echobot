@@ -13,11 +13,7 @@ sub webhook {
   my $logger = $app->log;
   my $request = $self->req;
   my $headers = $request->headers;
-
-  my $bot = LINE::Bot::API->new(
-    channel_secret => $self->config('channel_secret'),
-    channel_access_token => $self->config('channel_access_token')
-  );
+  my $bot = $app->line_message_api;
 
   my $x_line_signature = $headers->header('X-Line-Signature');
 
