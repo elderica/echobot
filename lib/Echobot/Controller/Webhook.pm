@@ -56,7 +56,7 @@ sub webhook {
       );
 
       unless ($reply->is_success) {
-        for my $detail (@{$reply->details // {}}) {
+        for my $detail (@{$reply->details // []}) {
           $logger->fatal(sprintf('%s:%d:%s', __FILE__, __LINE__, $detail->{message}))
             if $detail && ref($detail) eq 'HASH';
         }
