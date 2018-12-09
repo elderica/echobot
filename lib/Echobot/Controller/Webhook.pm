@@ -13,11 +13,11 @@ sub webhook {
   my $logger = $app->log;
   my $request = $self->req;
   my $headers = $request->headers;
-  my $bot = $app->line_message_api;
+  my $api = $app->line_message_api;
 
   my $x_line_signature = $headers->header('X-Line-Signature');
 
-  unless ($bot->validate_signature($request->body, $x_line_signature)) {
+  unless ($api->validate_signature($request->body, $x_line_signature)) {
     $self->rendered(400);
     return;
   }
@@ -25,7 +25,7 @@ sub webhook {
 
   my $events = {};
   try {
-    $events = $bot->parse_events_from_json($request->body);
+    $events = $api->parse_events_from_json($request->body);
   } catch {
     $logger->fatal($_);
     $logger->debug($request->content);
@@ -41,7 +41,7 @@ sub webhook {
       if ($event->is_text_message) {
         $messages->add_text(text =>
           sprintf("%s曰く「%s・・・」",
-            $event->is_user_event ? $bot->get_profile($event->user_id)->display_name : 'グループの誰か',
+            $event->is_user_event ? $api->get_profile($event->user_id)->display_name : 'グループの誰か',
             substr($event->text, 0, 6)))
           if int(rand 3) == 1;
       }
@@ -50,7 +50,7 @@ sub webhook {
 
       $logger->debug('\n' . dumper($event));
 
-      my $reply = $bot->reply_message(
+      my $reply = $api->reply_message(
         $event->reply_token,
         $messages->build
       );
