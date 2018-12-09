@@ -326,6 +326,16 @@ DISTRIBUTIONS
       MIME::Base64 0
       Test::More 0.60_01
       perl 5.005
+  Regexp-Assemble-0.38
+    pathname: R/RS/RSAVAGE/Regexp-Assemble-0.38.tgz
+    provides:
+      Regexp::Assemble 0.38
+    requirements:
+      ExtUtils::MakeMaker 0
+      constant 0
+      strict 0
+      vars 0
+      warnings 0
   Sub-Uplevel-0.2800
     pathname: D/DA/DAGOLDEN/Sub-Uplevel-0.2800.tar.gz
     provides:

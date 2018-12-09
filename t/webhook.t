@@ -5,8 +5,8 @@ use Test::More;
 use Test::Mojo;
 
 my $t = Test::Mojo->new('Echobot' => {
-  channel_secret       => '4065415af4324c402286d732539ccc79',
-  channel_access_token => 'tbUh6CQnHgZjh5oNbqQl5m2U/+5LBhfqZ+OCwIL4NtTz72pTym6EKKWTXUPEAf5yMDrj/BcGBbvojewktdQ/03xeiYI2+NDVGoYEy7zhoXhEh0SdMQ45vQkvUriGCK4VlRlFMazOoWUzRg0q/pz3XwdB04t89/1O/w1cDnyilFU='
+    channel_secret       => '4065415af4324c402286d732539ccc79',
+    channel_access_token => 'tbUh6CQnHgZjh5oNbqQl5m2U/+5LBhfqZ+OCwIL4NtTz72pTym6EKKWTXUPEAf5yMDrj/BcGBbvojewktdQ/03xeiYI2+NDVGoYEy7zhoXhEh0SdMQ45vQkvUriGCK4VlRlFMazOoWUzRg0q/pz3XwdB04t89/1O/w1cDnyilFU='
 });
 
 my $json = <<JSON;
